@@ -91,6 +91,10 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MVR_Boat | Properties")
 	float Friction;
 
+	// The angle at which the Boat lifts due to wind resistance...
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MVR_Boat | Properties")
+	float Lift;
+
 protected:
 
 	// FUNCTIONS...

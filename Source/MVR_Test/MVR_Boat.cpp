@@ -37,6 +37,7 @@ AMVR_Boat::AMVR_Boat()
 	Acceleration_Speed = 2000.f;
 	Deceleration_Speed = 1500.f;
 	Friction = 1000.f;
+	Lift = 5.f;
 
 	// Private Defaults...
 	move_speed = 0.f;
@@ -89,15 +90,25 @@ void AMVR_Boat::Tick(float DeltaTime)
 	}
 
 	// Move Boat...
-	FVector MoveDelta = GetActorForwardVector() * move_speed * DeltaTime;
-	AddActorWorldOffset(MoveDelta, true);
+	FVector move_delta = GetActorForwardVector() * move_speed * DeltaTime;
+	AddActorWorldOffset(move_delta, true);
+
+
+
+	// ********************************************
+	// Lift Logic...
+	// ********************************************
+	float lift_factor = FMath::GetMappedRangeValueClamped(FVector2D(0.0f, Top_Speed), FVector2D(0.0f, Lift), move_speed);
+	FRotator lift_rotation = Boat_Meshes->GetRelativeRotation();
+	lift_rotation.Pitch = FMath::FInterpTo(lift_rotation.Pitch, lift_factor, DeltaTime, 2.5f);
+	Boat_Meshes->SetRelativeRotation(lift_rotation);
 
 
 
 	// ********************************************
 	// Steering Logic...
 	// ********************************************
-	float speed_factor = FMath::Clamp(move_speed / Top_Speed, 0.f, 1.f);
+	float speed_factor = FMath::Clamp(move_speed / Top_Speed, -1.f, 1.f);
 	float target_yaw_speed = steering_scalar * Max_Turn_Speed * speed_factor;
 
 	turn_speed = FMath::FInterpTo(turn_speed, target_yaw_speed, DeltaTime, Turn_Acceleration);
