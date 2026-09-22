@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "../UI/MVR_UI_Main_Menu.h"
+#include "../UI/MVR_UI_Main.h"
 #include "MVR_Game_Mode.generated.h"
 
 /**
@@ -20,25 +21,14 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-	
-protected:
-	UPROPERTY(EditAnywhere, Category = "MVR")
-	TSubclassOf<UMVR_UI_Main_Menu> UI_Main_Menu_Class;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "MVR")
-	void Exit_Game();
 
+	// Initialises the game...
 	UFUNCTION(BlueprintCallable, Category = "MVR")
-	void Play_Game();
+	void Start_Game();
 
-	UFUNCTION(BlueprintCallable, Category = "MVR")
-	void Set_Is_Game_Playing(bool val);
-
-	UFUNCTION(BlueprintCallable, Category = "MVR")
-	bool Get_Is_Game_Playing();
-
-private:
-	bool bgame_playing;
-	UMVR_UI_Main_Menu* UI_Main_Menu;
+	// Tells every user/controller to start their game...
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastOnGameStarted();
 };

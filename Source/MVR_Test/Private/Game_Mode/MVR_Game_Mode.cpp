@@ -4,74 +4,36 @@
 #include "Game_Mode/MVR_Game_Mode.h"
 #include "GameFramework/Pawn.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "../Player_Controller/MVR_Player_Controller.h"
+#include "../Game_State/MVR_Game_State.h"
 
 AMVR_Game_Mode::AMVR_Game_Mode()
 {
-	bgame_playing = true;
+
 }
 
 
 void AMVR_Game_Mode::BeginPlay()
 {
-	UI_Main_Menu = CreateWidget<UMVR_UI_Main_Menu>(GetWorld()->GetFirstPlayerController(), UI_Main_Menu_Class);
-	if (!UI_Main_Menu)
-		return;
-	UI_Main_Menu->AddToViewport(0);
 
-	UI_Main_Menu->Btn_Exit_Clicked.AddUniqueDynamic(this, &AMVR_Game_Mode::Exit_Game);
-	UI_Main_Menu->Btn_Play_Clicked.AddUniqueDynamic(this, &AMVR_Game_Mode::Play_Game);
-
-	Set_Is_Game_Playing(false);
 }
 
-
-void AMVR_Game_Mode::Exit_Game()
+void AMVR_Game_Mode::Start_Game()
 {
-	APlayerController* pc = Cast<APlayerController>(GetWorld()->GetFirstLocalPlayerFromController());
-	UKismetSystemLibrary::QuitGame(GetWorld(), pc, EQuitPreference::Quit, false);
-}
-
-
-void AMVR_Game_Mode::Play_Game()
-{
-	if (!UI_Main_Menu)
+	AMVR_Game_State* game_state = GetGameState<AMVR_Game_State>();
+	if (!game_state)
 		return;
 
-	UI_Main_Menu->SetVisibility(ESlateVisibility::Collapsed);
-
-	Set_Is_Game_Playing(true);
+	game_state->bGame_Started = true;
+	MulticastOnGameStarted();
 }
 
-
-void AMVR_Game_Mode::Set_Is_Game_Playing(bool val)
+void AMVR_Game_Mode::MulticastOnGameStarted_Implementation()
 {
-	if (val)
+	for (FConstPlayerControllerIterator itr = GetWorld()->GetPlayerControllerIterator(); itr; ++itr)
 	{
-		APlayerController* pc = GetWorld()->GetFirstPlayerController();
-		if (pc)
-		{
-			pc->bShowMouseCursor = false;
-			pc->bEnableClickEvents = false;
-			pc->EnableInput(pc);
-		}
+		AMVR_Player_Controller* controller = Cast<AMVR_Player_Controller>(itr->Get());
+		if (controller)
+			controller->Start_Game();
 	}
-	else
-	{
-		APlayerController* pc = GetWorld()->GetFirstPlayerController();
-		if (pc)
-		{
-			pc->bShowMouseCursor = true;
-			pc->bEnableClickEvents = true;
-			pc->DisableInput(pc);
-		}
-	}
-
-	bgame_playing = val;
-	
-}
-
-
-bool AMVR_Game_Mode::Get_Is_Game_Playing()
-{
-	return bgame_playing;
 }

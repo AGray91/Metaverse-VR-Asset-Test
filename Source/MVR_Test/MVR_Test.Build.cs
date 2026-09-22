@@ -17,7 +17,8 @@ public class MVR_Test : ModuleRules
 			"MVR_Test/Public/Pawns",
 			"MVR_Test/Public/Actor_Components",
 			"MVR_Test/Public/UI",
-			"MVR_Test/Public/Game_Mode"
+			"MVR_Test/Public/Game_Mode",
+			"MVR_Test/Public/Game_State"
 		});
 
 		PrivateIncludePaths.AddRange(new string[]
@@ -25,8 +26,9 @@ public class MVR_Test : ModuleRules
 			"MVR_Test/Private/Pawns",
 			"MVR_Test/Private/Actor_Components",
 			"MVR_Test/Private/UI",
-			"MVR_Test/Private/Game_Mode"
-		});
+			"MVR_Test/Private/Game_Mode",
+            "MVR_Test/Private/Game_State"
+        });
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
