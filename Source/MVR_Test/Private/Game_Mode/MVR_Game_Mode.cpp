@@ -6,6 +6,9 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "../Player_Controller/MVR_Player_Controller.h"
 #include "../Game_State/MVR_Game_State.h"
+#include "Engine/World.h"
+#include "Engine/LevelStreaming.h"
+#include "Kismet/GameplayStatics.h"
 
 AMVR_Game_Mode::AMVR_Game_Mode()
 {
@@ -27,6 +30,14 @@ void AMVR_Game_Mode::Start_Game()
 	game_state->bGame_Started = true;
 	MulticastOnGameStarted();
 }
+
+
+void AMVR_Game_Mode::Restart_Game()
+{
+	FName level_name = *UGameplayStatics::GetCurrentLevelName(GetWorld());
+	UGameplayStatics::OpenLevel(GetWorld(), level_name);
+}
+
 
 void AMVR_Game_Mode::MulticastOnGameStarted_Implementation()
 {

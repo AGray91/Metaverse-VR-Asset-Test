@@ -31,6 +31,10 @@ AMVR_Boat::AMVR_Boat()
 	Boat_Movement = CreateDefaultSubobject<UBoatMovementComponent>("Boat_Movement");
 	Boat_Movement->Boat_Meshes = Boat_Meshes;
 
+	Boat_Collision = CreateDefaultSubobject<UBoxComponent>("Boat_Collision");
+	Boat_Collision->SetCollisionProfileName(FName("BlockAll"), true);
+	Boat_Collision->SetupAttachment(Origin);
+
 	// Look properties...
 	Look_Speed = 2.f;
 	Adjust_Look_Speed = 50.f;

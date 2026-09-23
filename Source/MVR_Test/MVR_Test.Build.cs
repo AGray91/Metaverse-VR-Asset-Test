@@ -18,7 +18,8 @@ public class MVR_Test : ModuleRules
 			"MVR_Test/Public/Actor_Components",
 			"MVR_Test/Public/UI",
 			"MVR_Test/Public/Game_Mode",
-			"MVR_Test/Public/Game_State"
+			"MVR_Test/Public/Game_State",
+			"MVR_Test/Public/Actors"
 		});
 
 		PrivateIncludePaths.AddRange(new string[]
@@ -27,7 +28,8 @@ public class MVR_Test : ModuleRules
 			"MVR_Test/Private/Actor_Components",
 			"MVR_Test/Private/UI",
 			"MVR_Test/Private/Game_Mode",
-            "MVR_Test/Private/Game_State"
+            "MVR_Test/Private/Game_State",
+			"MVR_Test/Private/Actors"
         });
 
 		// Uncomment if you are using Slate UI

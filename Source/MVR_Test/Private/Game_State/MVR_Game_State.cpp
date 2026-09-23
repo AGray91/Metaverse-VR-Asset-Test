@@ -19,6 +19,9 @@ void AMVR_Game_State::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
+	if (!bGame_Started)
+		return;
+
 	elapsed_time += DeltaSeconds;
 
 	for (FConstPlayerControllerIterator itr = GetWorld()->GetPlayerControllerIterator(); itr; ++itr)

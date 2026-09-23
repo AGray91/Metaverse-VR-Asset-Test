@@ -28,6 +28,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "MVR")
 	void Start_Game();
 
+	UFUNCTION(BlueprintCallable, Category = "MVR")
+	void Restart_Game();
+
 	// Tells every user/controller to start their game...
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastOnGameStarted();

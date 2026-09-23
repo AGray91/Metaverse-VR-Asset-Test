@@ -8,6 +8,7 @@
 
 void UMVR_UI_Main::NativeConstruct()
 {
+	_Txt_Countdown->SetVisibility(ESlateVisibility::Collapsed);
 }
 
 
@@ -25,4 +26,20 @@ void UMVR_UI_Main::Set_Timer_Text(FString txt)
 {
 	if (_Txt_Timer)
 		_Txt_Timer->SetText(FText::FromString(txt));
+}
+
+
+void UMVR_UI_Main::Set_Countdown_Visibility(bool val)
+{
+	if (val)
+		_Txt_Countdown->SetVisibility(ESlateVisibility::Visible);
+	else
+		_Txt_Countdown->SetVisibility(ESlateVisibility::Collapsed);
+}
+
+
+void UMVR_UI_Main::Set_Countdown_Text(FString txt)
+{
+	if (_Txt_Countdown)
+		_Txt_Countdown->SetText(FText::FromString(txt));
 }

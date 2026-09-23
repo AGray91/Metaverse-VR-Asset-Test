@@ -9,6 +9,7 @@
 #include "Camera/CameraComponent.h"
 #include "InputMappingContext.h"
 #include "../Actor_Components/BoatMovementComponent.h"
+#include "Components/BoxComponent.h"
 #include "MVR_Boat.generated.h"
 
 UCLASS()
@@ -45,6 +46,11 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "MVR_Boat | Components")
 	UBoatMovementComponent* Boat_Movement;
+
+	UPROPERTY(EditAnywhere, Category = "MVR_Boat | Components")
+	UBoxComponent* Boat_Collision;
+
+
 
 
 	// Properties...
